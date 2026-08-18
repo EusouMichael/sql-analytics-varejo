@@ -1,0 +1,2 @@
+qtd_vendas,qtd_itens_venda,qtd_produtos,qtd_clientes,qtd_fornecedores,qtd_marcas,qtd_categorias,data_inicial,data_final,receita_registrada,ticket_medio_venda
+50000,150034,10000,10000,10,10,5,2020-01-01,2023-10-31,150556075.72,3011.12
