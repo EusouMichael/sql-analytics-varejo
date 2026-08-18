@@ -1,4 +1,4 @@
-# SQL Analytics — Retail Sales
+# SQL Analytics — Varejo
 
 > **Estudo prático de SQL aplicado à análise de dados e perguntas de negócio**
 
@@ -55,18 +55,25 @@ clientes ──< vendas ──< itens_venda >── produtos
 ```text
 sql-analytics-varejo/
 ├── database/
-│   └── banco_de_dados_vendas.db
+│   ├── banco_de_dados_vendas.db
+│   └── README.md
 ├── data/
-├── docs/
+│   ├── black_friday_nebulanetworks.csv
+│   ├── quadro_geral.csv
+│   └── quadro_geral_ano_mes.csv
 ├── resultados/
+│   ├── black_friday_vendas_novembro.csv
+│   ├── categorias_2022.csv
+│   ├── categorias_periodo_completo.csv
+│   ├── fornecedores_black_friday.csv
+│   └── perfil_base.csv
 ├── sql/
 │   ├── 01_exploracao/
 │   ├── 02_data_quality/
 │   ├── 03_analise_temporal/
 │   ├── 04_black_friday/
 │   ├── 05_metricas/
-│   ├── 06_exercicios/
-│   └── originais/
+│   └── 06_exercicios/
 └── README.md
 ```
 
@@ -88,7 +95,7 @@ Foi identificada uma inconsistência relevante nos preços dos produtos. Aplican
 | Camisa | 1.842 / 1.956 |
 | Celular | 58 / 1.976 |
 
-A revisão **não altera automaticamente os valores**: primeiro é necessário definir a regra de negócio e a origem da inconsistência.
+A análise **não altera automaticamente os valores**: primeiro é necessário definir a regra de negócio e a origem da inconsistência.
 
 ### 3. Sazonalidade
 
@@ -98,7 +105,7 @@ A análise mensal permite comparar o comportamento das vendas entre os anos. Com
 
 Neste estudo, novembro foi utilizado como proxy do período de Black Friday. A base não possui novembro de 2023 porque o último registro é de 31/10/2023.
 
-A quantidade de registros de venda em novembro foi:
+A quantidade de registros em `vendas` durante novembro foi:
 
 | Ano | Vendas |
 |---|---:|
@@ -145,11 +152,9 @@ Em 2022, os volumes foram:
 - diferença entre **vendas**, **itens de venda** e **faturamento**;
 - importância de validar a métrica antes de interpretar o resultado.
 
-## 🔧 Revisões realizadas
+## 🔧 Revisão técnica das consultas
 
-O diretório `sql/originais/` preserva os scripts produzidos durante o estudo.
-
-Os diretórios numerados contêm versões revisadas para melhorar:
+As consultas do diretório `sql/` foram organizadas por tema e revisadas para melhorar:
 
 - nomenclatura;
 - legibilidade;
@@ -158,15 +163,19 @@ Os diretórios numerados contêm versões revisadas para melhorar:
 - interpretação das métricas;
 - documentação das limitações da base.
 
-### Exemplo de correção conceitual
+### Exemplos de correções conceituais
 
-Na questão sobre a diferença percentual entre a melhor e a pior categoria, a fórmula revisada é:
+**Black Friday:** os scripts de novembro utilizam explicitamente `strftime('%m', data_venda) = '11'`, evitando misturar o período de novembro com os demais meses. citeturn91file0
+
+**Comparação percentual:** a métrica entre a melhor e a pior categoria utiliza:
 
 ```text
 (Melhor − Pior) / Pior × 100
 ```
 
-Isso responde diretamente à pergunta "quanto a melhor categoria vendeu a mais em relação à pior".
+Isso responde diretamente à pergunta "quanto a melhor categoria vendeu a mais em relação à pior". citeturn95file0
+
+**Participação:** os percentuais são calculados sobre o total de registros de `itens_venda`, deixando explícita a granularidade da métrica. citeturn94file0
 
 ## ⚠️ Limitações
 
